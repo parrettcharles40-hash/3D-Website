@@ -1,26 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="ur">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nova 3D — Interactive Web</title>
+<title>Hash 3D — Interactive Web</title>
 <meta name="color-scheme" content="dark light" />
 <style>
   :root{
-    --bg: #0b0c10; --panel:#0f1118; --text:#eaf0ff; --muted:#9aa3b2; --brand:#7c5cff; --accent:#22d3ee;
-    --border: #232635; --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --bg:#0b0c10; --panel:#0f1118; --text:#eaf0ff; --muted:#9aa3b2;
+    --brand:#7c5cff; --accent:#22d3ee; --border:#232635; --shadow:0 10px 30px rgba(0,0,0,.35)
   }
-  :root.light{ --bg:#f7f7fb; --panel:#fff; --text:#0f1222; --muted:#5e667a; --border:#e6e7ee; --shadow:0 14px 28px rgba(14,18,30,.08)}
+  :root.light{ --bg:#f7f7fb; --panel:#fff; --text:#0f1222; --muted:#5e667a; --border:#e6e7ee; --shadow:0 14px 28px rgba(14,18,30,.08) }
+
   *{box-sizing:border-box} html,body{height:100%}
-  body{
-    margin:0; background:radial-gradient(1200px 600px at 80% -20%, rgba(124,92,255,.18), transparent 60%), var(--bg);
-    color:var(--text); font:500 16px/1.5 ui-sans-serif,system-ui,Segoe UI,Inter,Arial; -webkit-font-smoothing:antialiased
-  }
+  body{margin:0;background:radial-gradient(1200px 600px at 80% -20%, rgba(124,92,255,.18), transparent 60%), var(--bg);
+       color:var(--text);font:500 16px/1.5 ui-sans-serif,system-ui,Segoe UI,Inter,Arial;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
-  header{
-    position:fixed; inset:0 0 auto 0; z-index:10; backdrop-filter: blur(10px) saturate(1.1);
-    background: color-mix(in oklab, var(--bg), #000 6%); border-bottom:1px solid var(--border)
-  }
+
+  header{position:fixed;inset:0 0 auto 0;z-index:10;backdrop-filter:blur(10px) saturate(1.1);
+         background: color-mix(in oklab, var(--bg), #000 6%); border-bottom:1px solid var(--border)}
   .wrap{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between}
   .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px}
   .brand i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--brand),var(--accent))}
@@ -32,39 +30,31 @@
   .theme button{all:unset;cursor:pointer;padding:.45rem .6rem}
   .theme button:hover{background:color-mix(in oklab,var(--panel),#fff 10%)}
 
-  /* Stage (3D canvas) */
   #stage{position:fixed; inset:0; z-index:0; background:var(--bg)}
-  canvas{display:block; width:100%; height:100%}
+  canvas{display:block;width:100%;height:100%}
 
-  /* Hero overlay */
-  .hero{
-    position:relative; z-index:5; min-height:100svh; display:grid; place-items:center; text-align:center;
-    padding:100px 16px 40px;
-  }
+  .hero{position:relative;z-index:5;min-height:100svh;display:grid;place-items:center;text-align:center;padding:100px 16px 40px}
   .h-title{font-size:clamp(34px, 6vw, 64px); line-height:1.05; letter-spacing:-.02em; margin:0 0 10px; font-weight:900}
-  .h-sub{max-width:70ch;margin:0 auto 16px; color:var(--muted); font-size:clamp(16px,1.5vw,20px)}
+  .h-sub{max-width:70ch;margin:0 auto 16px;color:var(--muted);font-size:clamp(16px,1.5vw,20px)}
   .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
   .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
   .chip{padding:.4rem .7rem;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
   .hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.95rem}
   .hint kbd{padding:.15rem .35rem;border:1px solid var(--border);border-radius:6px;background:var(--panel);margin:0 .15rem}
 
-  /* Content sections */
-  section{position:relative; z-index:5; padding:80px 16px; background:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, color-mix(in oklab,var(--bg),#000 6%) 40%, color-mix(in oklab,var(--bg),#000 8%) 100%)
-  }
+  section{position:relative;z-index:5;padding:80px 16px;background:
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, color-mix(in oklab,var(--bg),#000 6%) 40%, color-mix(in oklab,var(--bg),#000 8%) 100%)}
   .container{max-width:1100px;margin:auto}
-  h2{font-size:clamp(24px,3vw,36px); margin:0 0 10px}
-  .grid{display:grid;gap:16px; grid-template-columns:repeat(3,minmax(0,1fr))}
+  h2{font-size:clamp(24px,3vw,36px);margin:0 0 10px}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
   @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
   @media (max-width:640px){.grid{grid-template-columns:1fr}}
 
-  footer{position:relative; z-index:5; border-top:1px solid var(--border); padding:24px 16px; background: color-mix(in oklab, var(--bg), #000 5%)}
+  footer{position:relative;z-index:5;border-top:1px solid var(--border);padding:24px 16px;background:color-mix(in oklab,var(--bg),#000 5%)}
   .muted{color:var(--muted)}
 
-  /* Small toast for offline/errors */
-  .toast{position:fixed; right:12px; bottom:12px; z-index:20; background:var(--panel); border:1px solid var(--border);
-    color:var(--text); padding:.6rem .75rem; border-radius:10px; box-shadow:var(--shadow); display:none}
+  .toast{position:fixed;right:12px;bottom:12px;z-index:20;background:var(--panel);border:1px solid var(--border);
+         color:var(--text);padding:.6rem .75rem;border-radius:10px;box-shadow:var(--shadow);display:none}
   .toast.show{display:block}
 </style>
 </head>
@@ -72,10 +62,10 @@
 
 <header>
   <div class="wrap">
-    <div class="brand"><i></i> Nova<span style="color:var(--accent)">3D</span></div>
+    <div class="brand"><i></i> Hash<span style="color:var(--accent)">3D</span></div>
     <nav class="nav" aria-label="Primary">
-      <a class="btn" href="#features">Features</a>
-      <a class="btn" href="#contact">Contact</a>
+      <a class="btn" href="#features">خصوصیات</a>
+      <a class="btn" href="#contact">رابطہ</a>
       <div class="theme" role="group" aria-label="Theme">
         <button id="lightBtn" aria-pressed="false">🌞</button>
         <button id="darkBtn"  aria-pressed="true">🌙</button>
@@ -89,38 +79,38 @@
 <main>
   <section class="hero" id="home">
     <div>
-      <h1 class="h-title">Build fast. <span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent">Ship in 3D.</span></h1>
-      <p class="h-sub">A minimal, high‑performance 3D landing page powered by Three.js. Drag to orbit, scroll for parallax, click to change shape.</p>
+      <h1 class="h-title">تیزی سے بنائیں۔ <span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent">3D میں لانچ کریں۔</span></h1>
+      <p class="h-sub">Three.js کی مدد سے ہلکی، تیز اور انٹرایکٹو لینڈنگ — ماؤس/ٹچ سے گھمائیں، اسکرول پر پیرا لکس، ایک کلک سے شکل بدلیں۔</p>
       <div class="controls">
-        <button class="btn btn--primary" data-shape="sphere">Sphere</button>
-        <button class="btn btn--primary" data-shape="torus">Torus</button>
-        <button class="btn btn--primary" data-shape="cube">Cube</button>
-        <button class="btn" id="pauseBtn" aria-pressed="false">Pause</button>
+        <button class="btn btn--primary" data-shape="sphere">کرہ</button>
+        <button class="btn btn--primary" data-shape="torus">ٹو رس</button>
+        <button class="btn btn--primary" data-shape="cube">کیوب</button>
+        <button class="btn" id="pauseBtn" aria-pressed="false">روکیں</button>
       </div>
       <div class="chips">
         <span class="chip">WebGL / Three.js</span>
-        <span class="chip">No models required</span>
-        <span class="chip">Mobile ready</span>
+        <span class="chip">ماڈل کی ضرورت نہیں</span>
+        <span class="chip">موبائل فرینڈلی</span>
       </div>
-      <div class="hint">Tip: drag with mouse / touch • <kbd>S</kbd> to switch shape • <kbd>P</kbd> to pause</div>
+      <div class="hint">ٹپ: ڈریگ کر کے گھمائیں • <kbd>S</kbd> شکل بدلیں • <kbd>P</kbd> روکیں/چلائیں</div>
     </div>
   </section>
 
   <section id="features">
     <div class="container">
-      <h2>Features</h2>
+      <h2>خصوصیات</h2>
       <div class="grid">
-        <article class="card">
-          <h3>Interactive object</h3>
-          <p class="muted">Glossy, physically‑based material with live color cycling and subtle bloom‑like highlights.</p>
+        <article>
+          <h3>انٹرایکٹو آبجیکٹ</h3>
+          <p class="muted">فزیکل میٹیریل، لائیو کلر سائیکل، نرم ہائی لائٹس۔</p>
         </article>
-        <article class="card">
-          <h3>Starfield</h3>
-          <p class="muted">Procedural point cloud (8k stars) with depth‑fade and parallax on scroll.</p>
+        <article>
+          <h3>اسٹار فیلڈ</h3>
+          <p class="muted">۸ ہزار ستاروں کا پوائنٹ کلاؤڈ، اسکرول پر پیرا لکس۔</p>
         </article>
-        <article class="card">
-          <h3>Performance minded</h3>
-          <p class="muted">DPR capped, requestAnimationFrame clock, sleeps on hidden tab, and graceful fallback toast.</p>
+        <article>
+          <h3>پرفارمنس</h3>
+          <p class="muted">DPR حد 2، چھپے ٹیب پر سلیپ، rAF کلاک۔</p>
         </article>
       </div>
     </div>
@@ -128,13 +118,13 @@
 
   <section id="contact">
     <div class="container">
-      <h2>Contact</h2>
-      <p class="muted">Want this skinned to your brand or embedded into your site? Drop a note.</p>
+      <h2>رابطہ</h2>
+      <p class="muted">اپنے برانڈ کے مطابق اس ڈیزائن کو چاہیئے؟ پیغام چھوڑیں۔</p>
       <form id="contactForm" style="display:grid;gap:10px;max-width:520px">
-        <input required name="name" placeholder="Your name" />
+        <input required name="name" placeholder="آپ کا نام" />
         <input required type="email" name="email" placeholder="you@example.com" />
-        <textarea required name="msg" rows="5" placeholder="What are we building?"></textarea>
-        <button class="btn btn--primary">Send</button>
+        <textarea required name="msg" rows="5" placeholder="ہم کیا بنا رہے ہیں؟"></textarea>
+        <button class="btn btn--primary">بھیجیں</button>
         <div id="formStatus" class="muted" role="status" aria-live="polite"></div>
       </form>
     </div>
@@ -142,216 +132,122 @@
 </main>
 
 <footer>
-  <div class="container muted">© <span id="year"></span> Nova 3D. All rights reserved.</div>
+  <div class="container muted">© <span id="year"></span> Hash 3D — تمام حقوق محفوظ ہیں۔</div>
 </footer>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<!-- Three.js (ESM via CDN). Requires internet. -->
+<!-- Three.js (ESM via CDN). انٹرنیٹ لازمی ہے -->
 <script type="module">
   import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-  // ---------- Theme toggle ----------
-  const root = document.documentElement;
-  const setTheme = m => {
-    if(m==='light'){ root.classList.add('light'); localStorage.setItem('theme','light'); }
-    else { root.classList.remove('light'); localStorage.setItem('theme','dark'); }
-    lightBtn.setAttribute('aria-pressed', m==='light'); darkBtn.setAttribute('aria-pressed', m!=='light');
-  };
-  const lightBtn = document.getElementById('lightBtn');
-  const darkBtn  = document.getElementById('darkBtn');
-  (function initTheme(){ setTheme(localStorage.getItem('theme')|| (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light')); })();
+  // Theme
+  const root=document.documentElement;
+  const setTheme=m=>{ if(m==='light'){root.classList.add('light');localStorage.setItem('theme','light');}
+                       else{root.classList.remove('light');localStorage.setItem('theme','dark');}
+                       lightBtn.setAttribute('aria-pressed',m==='light');darkBtn.setAttribute('aria-pressed',m!=='light'); };
+  const lightBtn=document.getElementById('lightBtn'), darkBtn=document.getElementById('darkBtn');
+  setTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
   lightBtn.addEventListener('click',()=>setTheme('light')); darkBtn.addEventListener('click',()=>setTheme('dark'));
 
-  // ---------- Toast helper ----------
-  const toast = (msg)=>{ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 3500); };
+  const toast=(m)=>{const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500);};
 
-  // ---------- Renderer / Scene ----------
-  const stage = document.getElementById('stage');
-  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setSize(innerWidth, innerHeight);
+  // Three.js setup
+  const stage=document.getElementById('stage');
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(innerWidth,innerHeight);
   stage.appendChild(renderer.domElement);
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 120);
-  camera.position.set(0, 0.8, 6);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,120);
+  camera.position.set(0,0.8,6);
 
-  // Lights
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x101020, 0.7);
-  scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xffffff, 1.2);
-  key.position.set(5,6,5);
-  scene.add(key);
+  const hemi=new THREE.HemisphereLight(0xffffff,0x101020,0.7); scene.add(hemi);
+  const key=new THREE.DirectionalLight(0xffffff,1.2); key.position.set(5,6,5); scene.add(key);
 
-  // ---------- Main object (procedural) ----------
-  const mat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('hsl(265,82%,60%)'),
-    emissive: 0x111122,
-    metalness: 0.8,
-    roughness: 0.25,
-    clearcoat: 0.6,
-    clearcoatRoughness: 0.2,
-    envMapIntensity: 0.8
+  const mat=new THREE.MeshPhysicalMaterial({
+    color:new THREE.Color('hsl(265,82%,60%)'),
+    emissive:0x111122, metalness:0.8, roughness:0.25, clearcoat:0.6, clearcoatRoughness:0.2, envMapIntensity:0.8
   });
-
-  const group = new THREE.Group(); scene.add(group);
-  const geos = {
-    sphere: new THREE.SphereGeometry(1.4, 64, 64),
-    torus: new THREE.TorusKnotGeometry(1, 0.35, 200, 16),
-    cube: new THREE.BoxGeometry(2.1, 2.1, 2.1, 6, 6, 6)
+  const group=new THREE.Group(); scene.add(group);
+  const geos={
+    sphere:new THREE.SphereGeometry(1.4,64,64),
+    torus:new THREE.TorusKnotGeometry(1,0.35,200,16),
+    cube:new THREE.BoxGeometry(2.1,2.1,2.1,6,6,6)
   };
+  const mesh=new THREE.Mesh(geos.torus,mat); group.add(mesh);
 
-  const mesh = new THREE.Mesh(geos.torus, mat); // default torus
-  group.add(mesh);
-
-  // ---------- Starfield ----------
-  const starCount = 8000;
-  const starGeo = new THREE.BufferGeometry();
-  const pos = new Float32Array(starCount*3);
-  for(let i=0;i<starCount;i++){
-    const r = THREE.MathUtils.randFloat(20, 60);
-    const t = Math.random()*Math.PI*2;
-    const p = Math.acos(THREE.MathUtils.randFloatSpread(2)); // 0..pi
-    pos[i*3]   = r*Math.sin(p)*Math.cos(t);
-    pos[i*3+1] = r*Math.cos(p)*0.6; // squash Y for band feel
-    pos[i*3+2] = r*Math.sin(p)*Math.sin(t);
-  }
+  // Stars
+  const starCount=8000, starGeo=new THREE.BufferGeometry(); const pos=new Float32Array(starCount*3);
+  for(let i=0;i<starCount;i++){ const r=THREE.MathUtils.randFloat(20,60), t=Math.random()*Math.PI*2, p=Math.acos(THREE.MathUtils.randFloatSpread(2));
+    pos[i*3]=r*Math.sin(p)*Math.cos(t); pos[i*3+1]=r*Math.cos(p)*0.6; pos[i*3+2]=r*Math.sin(p)*Math.sin(t); }
   starGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  const starMat = new THREE.PointsMaterial({size:0.05, color:0xffffff, transparent:true, opacity:0.85, depthWrite:false});
-  const stars = new THREE.Points(starGeo, starMat); scene.add(stars);
+  const starMat=new THREE.PointsMaterial({size:0.05,color:0xffffff,transparent:true,opacity:0.85,depthWrite:false});
+  const stars=new THREE.Points(starGeo,starMat); scene.add(stars);
 
-  // ---------- Interaction (drag rotate, scroll parallax) ----------
-  let isDown=false, lx=0, ly=0, rotX=0, rotY=0;
-  const onDown = e=>{ isDown=true; const p=pt(e); lx=p.x; ly=p.y; };
-  const onUp   = ()=>{ isDown=false; };
-  const pt = e => ('touches' in e) ? {x:e.touches[0].clientX,y:e.touches[0].clientY} : {x:e.clientX,y:e.clientY};
-  const onMove = e=>{
-    if(!isDown) return;
-    const p=pt(e);
-    rotY += (p.x - lx) * 0.003;
-    rotX += (p.y - ly) * 0.003;
-    rotX = Math.max(-1.2, Math.min(1.2, rotX));
-    lx=p.x; ly=p.y;
-  };
-  renderer.domElement.addEventListener('mousedown', onDown);
-  addEventListener('mouseup', onUp);
-  addEventListener('mouseleave', onUp);
-  renderer.domElement.addEventListener('mousemove', onMove);
-  renderer.domElement.addEventListener('touchstart', onDown, {passive:true});
-  addEventListener('touchend', onUp, {passive:true});
-  renderer.domElement.addEventListener('touchmove', onMove, {passive:true});
+  // Interaction
+  let isDown=false,lx=0,ly=0,rotX=0,rotY=0;
+  const pt=e=>('touches'in e)?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY};
+  const onDown=e=>{isDown=true;const p=pt(e);lx=p.x;ly=p.y;}, onUp=()=>{isDown=false;}, onMove=e=>{
+    if(!isDown) return; const p=pt(e); rotY+=(p.x-lx)*0.003; rotX+=(p.y-ly)*0.003; rotX=Math.max(-1.2,Math.min(1.2,rotX)); lx=p.x; ly=p.y; };
+  renderer.domElement.addEventListener('mousedown',onDown); addEventListener('mouseup',onUp); addEventListener('mouseleave',onUp);
+  renderer.domElement.addEventListener('mousemove',onMove);
+  renderer.domElement.addEventListener('touchstart',onDown,{passive:true}); addEventListener('touchend',onUp,{passive:true});
+  renderer.domElement.addEventListener('touchmove',onMove,{passive:true});
 
   // Scroll parallax
-  let scrollY = 0;
-  addEventListener('scroll', ()=>{
-    scrollY = scrollY * 0.85 + (scrollYToCamera() - scrollY) * 0.15;
-  }, {passive:true});
-  const scrollYToCamera = ()=> (scrollY = (document.documentElement.scrollTop || document.body.scrollTop)/innerHeight);
+  let scrollY=0; addEventListener('scroll',()=>{ scrollY = (document.documentElement.scrollTop||document.body.scrollTop)/innerHeight; },{passive:true});
 
-  // ---------- Shape switching ----------
-  const buttons = document.querySelectorAll('[data-shape]');
-  let targetShape = 'torus';
-  const switchShape = (name)=>{
-    if(!geos[name] || name===targetShape) return;
-    targetShape = name;
-    // soft fade + swap
-    const start = performance.now(), dur=280;
-    const startOpacity = mat.opacity || 1;
-    mat.transparent = true;
-    const tick = (now)=>{
-      const t = Math.min(1, (now-start)/dur);
-      mat.opacity = THREE.MathUtils.lerp(startOpacity, 0.0, t);
-      if(t<1){ requestAnimationFrame(tick); }
-      else{
-        mesh.geometry.dispose();
-        mesh.geometry = geos[targetShape];
-        // fade back in
-        const s2 = performance.now();
-        const up = (n)=>{
-          const u = Math.min(1, (n-s2)/dur);
-          mat.opacity = THREE.MathUtils.lerp(0.0, 1.0, u);
-          if(u<1) requestAnimationFrame(up);
-          else mat.transparent = false;
-        };
-        requestAnimationFrame(up);
-      }
-    };
-    requestAnimationFrame(tick);
+  // Shape switch
+  const buttons=document.querySelectorAll('[data-shape]'); let target='torus';
+  const switchShape=(name)=>{
+    if(!geos[name]||name===target) return; target=name;
+    const start=performance.now(), dur=280, startOp=mat.opacity||1; mat.transparent=true;
+    const fadeOut=(now)=>{ const t=Math.min(1,(now-start)/dur); mat.opacity=THREE.MathUtils.lerp(startOp,0,t);
+      if(t<1) requestAnimationFrame(fadeOut); else{ mesh.geometry.dispose(); mesh.geometry=geos[target];
+        const s2=performance.now(); const fadeIn=(n)=>{ const u=Math.min(1,(n-s2)/dur); mat.opacity=THREE.MathUtils.lerp(0,1,u);
+          if(u<1) requestAnimationFrame(fadeIn); else mat.transparent=false; }; requestAnimationFrame(fadeIn); } };
+    requestAnimationFrame(fadeOut);
   };
-  buttons.forEach(b=>b.addEventListener('click', ()=>switchShape(b.dataset.shape)));
+  buttons.forEach(b=>b.addEventListener('click',()=>switchShape(b.dataset.shape)));
 
   // Keyboard shortcuts
-  const shapes = ['sphere','torus','cube'];
-  addEventListener('keydown', (e)=>{
-    if(e.key.toLowerCase()==='s'){ switchShape(shapes[(shapes.indexOf(targetShape)+1)%shapes.length]); }
+  const shapes=['sphere','torus','cube']; addEventListener('keydown',e=>{
+    if(e.key.toLowerCase()==='s'){ switchShape(shapes[(shapes.indexOf(target)+1)%shapes.length]); }
     if(e.key.toLowerCase()==='p'){ togglePause(); }
   });
 
-  // ---------- Animation loop ----------
-  let running = true;
-  const clock = new THREE.Clock();
-  const pauseBtn = document.getElementById('pauseBtn');
-  function togglePause(){
-    running = !running;
-    pauseBtn.setAttribute('aria-pressed', String(!running));
-    pauseBtn.textContent = running ? 'Pause' : 'Resume';
-    if(running) animate();
-  }
-  pauseBtn.addEventListener('click', togglePause);
+  // Animation
+  let running=true; const clock=new THREE.Clock(); const pauseBtn=document.getElementById('pauseBtn');
+  function togglePause(){ running=!running; pauseBtn.setAttribute('aria-pressed', String(!running));
+    pauseBtn.textContent=running?'روکیں':'چلائیں'; if(running) animate(); }
+  pauseBtn.addEventListener('click',togglePause);
 
   function animate(){
     if(!running) return;
-    const t = clock.getElapsedTime();
-    // color pulse
-    const hue = (t*12)%360;
-    mat.color.set(`hsl(${hue}, 82%, 62%)`);
-    // rotate from drag + idle motion
-    group.rotation.y += (rotY - group.rotation.y) * 0.15;
-    group.rotation.x += (rotX - group.rotation.x) * 0.15;
-    mesh.rotation.y += 0.003;
-    mesh.rotation.x += 0.0015;
-
-    // star drift & parallax
+    const t=clock.getElapsedTime(); const hue=(t*12)%360; mat.color.set(`hsl(${hue},82%,62%)`);
+    group.rotation.y += (rotY - group.rotation.y)*0.15; group.rotation.x += (rotX - group.rotation.x)*0.15;
+    mesh.rotation.y += 0.003; mesh.rotation.x += 0.0015;
     stars.rotation.y += 0.0006;
     camera.position.z = 6 + Math.sin(t*0.6)*0.2 + scrollY*1.2;
-    camera.position.y = 0.8 - scrollY*0.6;
-    camera.lookAt(0,0,0);
-
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+    camera.position.y = 0.8 - scrollY*0.6; camera.lookAt(0,0,0);
+    renderer.render(scene,camera); requestAnimationFrame(animate);
   }
   animate();
 
-  // Sleep when hidden to save battery
-  document.addEventListener('visibilitychange', ()=>{
-    if(document.hidden){ running=false; }
-    else{ if(!running){ running=true; animate(); } }
-  });
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden){running=false;} else{ if(!running){running=true; animate();} }});
+  addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight); });
 
-  // Handle resize
-  addEventListener('resize', ()=>{
-    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setSize(innerWidth, innerHeight);
-  });
+  renderer.getContext || toast('WebGL دستیاب نہیں — 3D آف ہوگا۔');
+  setTimeout(()=>{ if(!renderer.info) toast('اگر کچھ نہیں چل رہا تو انٹرنیٹ/CDN چیک کریں۔'); },1800);
 
-  // Fallback: if WebGL/Three fails to load
-  renderer.getContext || toast('WebGL not available. 3D effects disabled.');
-  // (module import errors will show in console; we also show a gentle toast after a moment)
-  setTimeout(()=>{ if(!renderer.info) toast('If nothing moves, check your connection (CDN).'); }, 1800);
+  document.getElementById('year').textContent=new Date().getFullYear();
 
-  // Footer year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Dumb contact form demo (no backend)
   document.getElementById('contactForm').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const s = document.getElementById('formStatus');
-    s.textContent = 'Sending…';
-    await new Promise(r=>setTimeout(r,700));
-    e.target.reset();
-    s.textContent = 'Thanks! We’ll get back to you. ✔️';
+    e.preventDefault(); const s=document.getElementById('formStatus'); s.textContent='بھیجا جا رہا ہے…';
+    await new Promise(r=>setTimeout(r,700)); e.target.reset(); s.textContent='شکریہ! ہم جلد جواب دیں گے. ✔️';
   });
 </script>
 
